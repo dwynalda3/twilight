@@ -4,9 +4,12 @@
 /dist
 /tmp
 /out-tsc
+/src/main/webapp
+/node
 
 # dependencies
 /node_modules
+/node
 
 # IDEs and editors
 /.idea
@@ -37,3 +40,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/target/

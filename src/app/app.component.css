@@ -1,0 +1,30 @@
+
+  .selected {
+    background-color: #CFD8DC !important;
+    color: white;
+  }
+  a {
+    color: blue;
+    text-decoration: underline;
+  }
+  
+  table {
+	margin: 0 auto;  
+  }
+  tr {
+  	border: 1px solid black;
+  	width: 100px;
+  }
+  td {
+  	
+  	text-align: center;
+  }
+
+button {
+	padding: 0px 5px;
+}
+
+mat-card{
+	margin-top: -20px;
+	margin-bottom: 25px;
+}
