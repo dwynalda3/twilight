@@ -8,15 +8,17 @@ export class SearchService {
   results: string[];
   // Inject HttpClient into your component or service.
   constructor(private http: Http) {  }
-  search(query: string): Promise<any> {
-    let url = window.location.href;
-    if (url.search('localhost:4200') != -1 ) {
-      url = 'https://wlsdev1.gfs.com:7102/ZapWeb/';
-    }
-    // Make the HTTP request:
-    url = url + 'search?' + query + '*';
+  start(numPlayers: number){
+    let url = 'http://localhost:8080/twilightServer/start?' + numPlayers; 
     console.log(url);
-    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+    }
+  
+  submit(color: string, race: string) {
+    let url = 'http://localhost:8080/twilightServer/'; 
+    url = url + color + '/' + race;
+    console.log(url);
+    this.http.get(url);
   }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

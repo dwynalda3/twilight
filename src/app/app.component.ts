@@ -5,18 +5,25 @@ import { SearchService } from './search.service';
 @Component({
   selector: 'my-app',
   providers: [SearchService],
-  styleUrls: ['./app.component.css'],
-  templateUrl: './app.component.html',
+  styleUrls: ['app.component.css'],
+  templateUrl: 'app.component.html',
 
 })
 export class AppComponent {
   title = 'Twilight Imperium Fourth Edition';
   systems = new Array<Array<number>>();
-  
+  submitted = false;
   constructor(private searchService: SearchService) { 
-    this.setupSystems();
+    this.setupMat();
   }
-  setupSystems(){
+  submit(color: string, race: string){
+    if(color.search("Red") != -1){
+      console.log(this.searchService.start(4));
+    }
+    this.submitted = true;
+    console.log(this.searchService.submit(color, race));
+  }
+  setupMat(){
     this.systems = [];
     this.systems[0] = [];
     var row = 0, max = 3, soFar  = 0;
@@ -32,13 +39,12 @@ export class AppComponent {
         }else{
           max--;
         }
-        console.log(this.systems[row]);
         row++;
         if(row<7){
           this.systems[row] = [];
         }
       }
-    } 
+    }
   }
   /*toggleCard(){
     this.cardVisible=!this.cardVisible;
@@ -86,7 +92,7 @@ export class AppComponent {
       }
     });
   }*/  
-  searchSystem(name: string) {
-    console.log(name);
+  searchSystem(index: number) {
+    console.log(index);
   }
  }

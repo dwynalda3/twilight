@@ -1,16 +1,21 @@
- <table>
- <tr>
- 	<td><h1>{{title}}</h1></td>
-</tr>
 
- </table> 
 <table>
-<tr *ngFor="let row of systems">
-    <td *ngFor="let name of row">
-    	<a (click)="searchSystem(name)">
-        	<img src="capture.jpg">
-    	</a>
-    </td>
-</tr>
-
+	<tr>
+		<td><h1>{{title}}</h1></td>
+	</tr>
 </table>
+<div *ngIf="!submitted">
+	<app-player-form #form></app-player-form>
+	<button (click)="submit(form.model.color, form.model.race)">Submit</button>
+</div>
+
+<div *ngIf="submitted">
+	<table>
+		<tr *ngFor="let row of systems">
+			<td *ngFor="let index of row"><a (click)="searchSystem(index)">
+					<img src="capture.jpg">
+			</a></td>
+		</tr>
+	</table>
+
+</div>

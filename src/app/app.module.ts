@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
-import { MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, MatCardModule, MatListModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PlayerFormComponent } from './player-form/player-form.component';
 
 @NgModule({
   imports: [
@@ -13,15 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatInputModule, 
-    MatButtonModule,
-    MatSelectModule,
-    MatIconModule,
-    MatCardModule,
-    MatListModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    PlayerFormComponent
   ],providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
 
