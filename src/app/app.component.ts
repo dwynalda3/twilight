@@ -10,18 +10,20 @@ import { SearchService } from './search.service';
 
 })
 export class AppComponent {
+  playerNum = 0;
   title = 'Twilight Imperium Fourth Edition';
   systems = new Array<Array<number>>();
   submitted = false;
   constructor(private searchService: SearchService) { 
     this.setupMat();
+    
   }
   submit(color: string, race: string){
-    if(color.search("Red") != -1){
-      console.log(this.searchService.start(4));
-    }
-    this.submitted = true;
-    console.log(this.searchService.submit(color, race));
+      this.submitted = true;
+      this.searchService.createPlayer(color, race).then(result => {
+        this.playerNum = result.id;
+        console.log(this.playerNum);
+      });
   }
   setupMat(){
     this.systems = [];

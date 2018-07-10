@@ -7,18 +7,17 @@ export class SearchService {
 
   results: string[];
   // Inject HttpClient into your component or service.
-  constructor(private http: Http) {  }
+  constructor(private http: Http) {this.start(4);}
   start(numPlayers: number){
-    let url = 'http://localhost:8080/twilightServer/start?' + numPlayers; 
+    let url = 'http://localhost:8080/start?numPlayers=' + numPlayers; 
     console.log(url);
-return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+	 this.http.get(url)
     }
   
-  submit(color: string, race: string) {
-    let url = 'http://localhost:8080/twilightServer/'; 
-    url = url + color + '/' + race;
+  createPlayer(color: string, race: string) {
+    let url = 'http://localhost:8080/create/' + color + '/' + race;
     console.log(url);
-    this.http.get(url);
+    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
   }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
