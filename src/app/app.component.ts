@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Http } from '@angular/http';
-import { Injectable } from '@angular/core';
-import { SearchService } from './search.service';
+import {Component} from '@angular/core';
+import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
+import {SearchService} from './search.service';
 @Component({
   selector: 'my-app',
   providers: [SearchService],
@@ -12,38 +12,93 @@ import { SearchService } from './search.service';
 export class AppComponent {
   playerNum = 0;
   title = 'Twilight Imperium Fourth Edition';
-  systems = new Array<Array<number>>();
+  tiles = new Array<Array<number>>();
+  systems = new Array<string>(37);
   submitted = false;
-  constructor(private searchService: SearchService) { 
+  mySystems = new Array<string>();
+  heldSystem: string;
+
+  constructor(private searchService: SearchService) {
     this.setupMat();
-    
   }
-  submit(color: string, race: string){
-      this.submitted = true;
-      this.searchService.createPlayer(color, race).then(result => {
-        this.playerNum = result.id;
-        console.log(this.playerNum);
+  refresh(){
+     this.searchService.refresh().then(result => {
+      let i = 0;
+      for (const sys of result) {
+        if (sys != null) {
+          this.systems[i] = sys.name;
+        }
+        i++;
+      }
+    });
+  }
+  submit(color: string, race: string) {
+    this.searchService.start(4).then(result => {
+      let i = 0;
+      for (const sys of result) {
+        if (sys != null) {
+          this.systems[i] = sys.name;
+        }
+        i++;
+      }
+    });
+    this.submitted = true;
+    this.searchService.createPlayer(color, race).then(result => {
+      this.playerNum = result.id;
+      for (const sys of result.systems) {
+        this.mySystems.push(sys.name);
+      }
+    });
+  }
+
+  pickupSystem(index: number) {
+    if (this.heldSystem == null) {
+      this.heldSystem = this.mySystems[index];
+      this.mySystems.splice(index, 1);
+    } else {
+      alert('You must select a system to place ' + this.heldSystem);
+    }
+
+  }
+  placeSystem(index: number) {
+    console.log(index);
+    if (this.heldSystem != null) {
+      this.searchService.assignSystem(index, this.heldSystem).then(result => {
+        let locationName = result[index].name;
+        if (locationName != this.heldSystem) {
+          alert("That spot is already taken by " + locationName);
+          this.mySystems.push(this.heldSystem);
+        } 
+        this.heldSystem = null;
+        let i = 0;
+        for (const sys of result) {
+          if (sys != null) {
+            this.systems[i] = sys.name;
+          }
+          i++;
+        }
       });
+    }
   }
-  setupMat(){
-    this.systems = [];
-    this.systems[0] = [];
-    var row = 0, max = 3, soFar  = 0;
-    for(let i = 0;i<37;i++){
-      if(soFar<max) {
-        this.systems[row][soFar] = i;
+  setupMat() {
+    this.tiles = [];
+    this.tiles[0] = [];
+    var row = 0, max = 3, soFar = 0;
+    for (let i = 0; i < 37; i++) {
+      if (soFar < max) {
+        this.tiles[row][soFar] = i;
         soFar++;
-      }else{
-        this.systems[row][soFar] = i;
-        soFar=0;
-        if(i<18){
+      } else {
+        this.tiles[row][soFar] = i;
+        soFar = 0;
+        if (i < 18) {
           max++;
-        }else{
+        } else {
           max--;
         }
         row++;
-        if(row<7){
-          this.systems[row] = [];
+        if (row < 7) {
+          this.tiles[row] = [];
         }
       }
     }
@@ -93,8 +148,6 @@ export class AppComponent {
         this.dependGavs.push(tempArray);
       }
     });
-  }*/  
-  searchSystem(index: number) {
-    console.log(index);
-  }
- }
+  }*/
+
+}

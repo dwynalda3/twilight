@@ -1,3 +1,32 @@
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 75%;
+}
+
+.pictureContainer {
+    position: relative;
+    text-align: center;
+    color: white;
+    width:14%;
+	float: center;
+	display: inline-block;
+}
+
+.row
+    {
+        text-align:center;
+        width:55%;
+        height: 55%;
+    }
+
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
 
   .selected {
     background-color: #CFD8DC !important;
@@ -10,26 +39,23 @@
   
   table {
 	margin: 0 auto;  
+	width:75%;
   }
   tr {
   	border: 1px solid black;
-  	width: 100px;
+  	 height: 10%;
+  	 width: 75%;
   }
   td {
-  	
+  	position:relative;
   	text-align: center;
   }
   
   img {
-  	height: 64px;
-  	width: 64px;
+  	height: 100%;
+  	width: 100%;
   }
 
 button {
 	padding: 0px 5px;
-}
-
-mat-card{
-	margin-top: -20px;
-	margin-bottom: 25px;
 }

@@ -11,11 +11,21 @@ export class SearchService {
   start(numPlayers: number){
     let url = 'http://localhost:8080/start?numPlayers=' + numPlayers; 
     console.log(url);
-	 this.http.get(url)
-    }
+    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);    
+  }
   
   createPlayer(color: string, race: string) {
     let url = 'http://localhost:8080/create/' + color + '/' + race;
+    console.log(url);
+    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+  }
+  assignSystem(index: number, system: string){
+    let url = 'http://localhost:8080/assign/' + system + '/' + index;
+    console.log(url);
+    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+  }
+  refresh(){
+    let url = 'http://localhost:8080/refresh/';
     console.log(url);
     return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
   }

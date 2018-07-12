@@ -11,11 +11,19 @@
 
 <div *ngIf="submitted">
 	<table>
-		<tr *ngFor="let row of systems">
-			<td *ngFor="let index of row"><a (click)="searchSystem(index)">
-					<img src="capture.jpg">
-			</a></td>
-		</tr>
+			<div class="row"*ngFor="let row of tiles">
+				<div class="pictureContainer" *ngFor="let index of row">
+					<a (click)="placeSystem(index)"> <img src="capture.jpg">
+					</a>
+					<div class="centered">{{systems[index]}}</div>
+				</div>
+			</div>
 	</table>
 
+	<table>
+		<button (click)="refresh()">Refresh</button>
+		<tr *ngFor="let name of mySystems; let i = index">
+			<td><a (click)="pickupSystem(i)">{{name}}</a></td>
+		</tr>
+	</table>
 </div>
