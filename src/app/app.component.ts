@@ -20,8 +20,9 @@ export class AppComponent {
 
   constructor(private searchService: SearchService) {
     this.setupMat();
+    this.refresh();
   }
-  refresh(){
+  refresh() {
      this.searchService.refresh().then(result => {
       let i = 0;
       for (const sys of result) {
@@ -48,6 +49,7 @@ export class AppComponent {
       for (const sys of result.systems) {
         this.mySystems.push(sys.name);
       }
+    this.refresh();
     });
   }
 
@@ -58,17 +60,17 @@ export class AppComponent {
     } else {
       alert('You must select a system to place ' + this.heldSystem);
     }
-
+  this.refresh();
   }
   placeSystem(index: number) {
     console.log(index);
     if (this.heldSystem != null) {
       this.searchService.assignSystem(index, this.heldSystem).then(result => {
-        let locationName = result[index].name;
+        const locationName = result[index].name;
         if (locationName != this.heldSystem) {
-          alert("That spot is already taken by " + locationName);
+          alert('That spot is already taken by ' + locationName);
           this.mySystems.push(this.heldSystem);
-        } 
+        }
         this.heldSystem = null;
         let i = 0;
         for (const sys of result) {
@@ -77,6 +79,7 @@ export class AppComponent {
           }
           i++;
         }
+      this.refresh();
       });
     }
   }
