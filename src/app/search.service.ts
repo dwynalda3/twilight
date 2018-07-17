@@ -19,8 +19,8 @@ export class SearchService {
     console.log(url);
     return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
   }
-  assignSystem(index: number, system: string){
-    let url = 'http://localhost:8080/assign/' + system + '/' + index;
+  assignSystem(index: number, system: string, playerNum: number){
+    let url = 'http://localhost:8080/assign/' + system + '/' + index + '/' + playerNum;
     console.log(url);
     return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
   }

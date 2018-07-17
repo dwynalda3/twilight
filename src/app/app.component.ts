@@ -65,7 +65,7 @@ export class AppComponent {
   placeSystem(index: number) {
     console.log(index);
     if (this.heldSystem != null) {
-      this.searchService.assignSystem(index, this.heldSystem).then(result => {
+      this.searchService.assignSystem(index, this.heldSystem, this.playerNum).then(result => {
         const locationName = result[index].name;
         if (locationName != this.heldSystem) {
           alert('That spot is already taken by ' + locationName);
