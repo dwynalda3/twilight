@@ -24,8 +24,18 @@ export class SearchService {
     console.log(url);
     return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
   }
+  viewSystem(index: number){
+    let url = 'http://localhost:8080/viewSystem/' + index;
+    console.log(url);
+    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+  }
   refresh(){
     let url = 'http://localhost:8080/refresh/';
+    console.log(url);
+    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+  }
+  getState(){
+    let url = 'http://localhost:8080/getState/';
     console.log(url);
     return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
   }

@@ -13,7 +13,7 @@
 	<table>
 			<div class="row"*ngFor="let row of tiles">
 				<div class="pictureContainer" *ngFor="let index of row">
-					<a (click)="placeSystem(index)"> <img src="capture.jpg">
+					<a (click)="selectSystem(index)"> <img src="capture.jpg">
 					</a>
 					<div class="centered">{{systems[index]}}</div>
 				</div>

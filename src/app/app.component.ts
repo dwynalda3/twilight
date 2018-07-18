@@ -17,13 +17,14 @@ export class AppComponent {
   submitted = false;
   mySystems = new Array<string>();
   heldSystem: string;
+  state: string;
 
   constructor(private searchService: SearchService) {
-    this.setupMat();
     this.refresh();
+    this.setupMat();
   }
   refresh() {
-     this.searchService.refresh().then(result => {
+    this.searchService.refresh().then(result => {
       let i = 0;
       for (const sys of result) {
         if (sys != null) {
@@ -31,6 +32,10 @@ export class AppComponent {
         }
         i++;
       }
+      this.searchService.getState().then(result2 => {
+        this.state = result2;
+        console.log(this.state);
+      });
     });
   }
   submit(color: string, race: string) {
@@ -49,7 +54,7 @@ export class AppComponent {
       for (const sys of result.systems) {
         this.mySystems.push(sys.name);
       }
-    this.refresh();
+      this.refresh();
     });
   }
 
@@ -60,33 +65,39 @@ export class AppComponent {
     } else {
       alert('You must select a system to place ' + this.heldSystem);
     }
-  this.refresh();
+    this.refresh();
   }
-  placeSystem(index: number) {
+  selectSystem(index: number) {
     console.log(index);
-    if (this.heldSystem != null) {
-      this.searchService.assignSystem(index, this.heldSystem, this.playerNum).then(result => {
-        const locationName = result[index].name;
-        if (locationName != this.heldSystem) {
-          alert('That spot is already taken by ' + locationName);
-          this.mySystems.push(this.heldSystem);
-        }
-        this.heldSystem = null;
-        let i = 0;
-        for (const sys of result) {
-          if (sys != null) {
-            this.systems[i] = sys.name;
+    if (this.state === 'SETUP') {
+      if (this.heldSystem != null) {
+        this.searchService.assignSystem(index, this.heldSystem, this.playerNum).then(result => {
+          const locationName = result[index].name;
+          if (locationName !== this.heldSystem) {
+            alert('That spot is already taken by ' + locationName);
+            this.mySystems.push(this.heldSystem);
           }
-          i++;
-        }
-      this.refresh();
+          this.heldSystem = null;
+          let i = 0;
+          for (const sys of result) {
+            if (sys != null) {
+              this.systems[i] = sys.name;
+            }
+            i++;
+          }
+          this.refresh();
+        });
+      }
+    }else{
+      this.searchService.viewSystem(index).then(result => {
+        console.log(result.neighbors);
       });
     }
   }
   setupMat() {
     this.tiles = [];
     this.tiles[0] = [];
-    var row = 0, max = 3, soFar = 0;
+    let row = 0, max = 3, soFar = 0;
     for (let i = 0; i < 37; i++) {
       if (soFar < max) {
         this.tiles[row][soFar] = i;
