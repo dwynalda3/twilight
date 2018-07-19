@@ -90,7 +90,10 @@ export class AppComponent {
       }
     }else{
       this.searchService.viewSystem(index).then(result => {
-        console.log(result.neighbors);
+        result.neighborLocations.forEach( (element) => {
+          console.log(this.systems[element]);
+         });
+        
       });
     }
   }
